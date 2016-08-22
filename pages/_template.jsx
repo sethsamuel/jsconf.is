@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Helmet from 'react-helmet'
 import classnames from 'classnames'
 import config from '../config.toml'
@@ -71,8 +72,12 @@ module.exports = class Template extends React.Component {
             </div>
           </div>
         </div>
-        {React.cloneElement(this.props.children, { onToggleMenu: this.onPageToggleMenu })}
-        <Footer />
+        <ReactCSSTransitionGroup transitionName="page" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+          <div className="page" key={location.pathname}>
+            {React.cloneElement(this.props.children, { onToggleMenu: this.onPageToggleMenu })}
+            <Footer />
+          </div>
+        </ReactCSSTransitionGroup>
       </div>
     )
   }
